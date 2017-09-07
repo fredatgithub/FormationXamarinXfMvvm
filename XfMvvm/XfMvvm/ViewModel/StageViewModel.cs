@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using XfMvvm.Command;
 using XfMvvm.Model;
 using XfMvvm.Service;
 
 namespace XfMvvm.ViewModel
 {
-  class StageViewModel : INotifyPropertyChanged
+  internal class StageViewModel : INotifyPropertyChanged
   {
     private IServiceStage _ServiceStage = null;
-    private ObservableCollection<Stage> _ListeStages = null;
+    private ObservableCollection<Stage> _listeStages = null;
 
     public DelegateCommand Load { get; set; }
     public DelegateCommand Clear { get; set; }
@@ -20,46 +18,41 @@ namespace XfMvvm.ViewModel
     public StageViewModel()
     {
       _ServiceStage = new ServiceStage();
-      _ListeStages = _ServiceStage.RetourStages();
-      Load = new DelegateCommand(LoadStages);
-      Clear = new DelegateCommand(ClearStages);
-      Add = new DelegateCommand(AddStages);
+      _listeStages = _ServiceStage.RetourStages();
+      Load = new DelegateCommand(LoadStages, null);
+      Clear = new DelegateCommand(ClearStages, () => _listeStages.Count > 0);
+      Add = new DelegateCommand(AddStages, null);
     }
 
     private void ClearStages()
     {
-      if (_ListeStages != null)
+      if (_listeStages != null)
       {
         _ServiceStage.ClearStage();
-        _ListeStages = _ListeStages;
+        _listeStages = _listeStages;
         //Clear.ExecuteChanged();
       }
     }
 
     private void LoadStages()
     {
-      try
-      {
-        Stages = _ServiceStage.RetourStages();
-      }
-      catch (Exception e)
-      {
-        throw;
-      }
+      Stages = _ServiceStage.RetourStages();
     }
 
     public void AddStages()
     {
       _ServiceStage.AddStage();
+      Clear.ExecuteChanged();
     }
 
     public ObservableCollection<Stage> Stages
     {
-      get { return _ListeStages; }
+      get { return _listeStages; }
       set
       {
-        _ListeStages = value;
+        _listeStages = value;
         OnPropertyChanged(nameof(Stages));
+        Clear.ExecuteChanged();
       }
     }
 
