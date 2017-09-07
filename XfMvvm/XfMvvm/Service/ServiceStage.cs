@@ -1,11 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reflection;
 using XfMvvm.Model;
 
 namespace XfMvvm.Service
 {
-
-
   public class ServiceStage : IServiceStage
   {
     private ObservableCollection<Stage> liste;
@@ -38,6 +35,5 @@ namespace XfMvvm.Service
     {
       liste.Clear();
     }
-
   }
 }

@@ -2,7 +2,7 @@
 
 namespace XfMvvm.Service
 {
-  public class IServiceStage
+  public interface IServiceStage
   {
     ObservableCollection<Model.Stage> RetourStages();
     void ClearStage();

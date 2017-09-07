@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XfMvvm.ViewModel;
 
 namespace XfMvvm.View
 {
@@ -15,6 +10,8 @@ namespace XfMvvm.View
     public StageView()
     {
       InitializeComponent();
+      StageViewModel vm = new StageViewModel();
+      BindingContext = vm;
     }
   }
 }

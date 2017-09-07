@@ -13,7 +13,7 @@ namespace XfMvvm
     {
       InitializeComponent();
 
-      MainPage = new XfMvvm.MainPage();
+      MainPage = new XfMvvm.View.StageView();
     }
 
     protected override void OnStart()
